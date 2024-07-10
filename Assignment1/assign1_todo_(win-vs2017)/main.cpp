@@ -135,7 +135,7 @@ void DrawOneCar(float bodyColor[3])
 
     glPushMatrix();
     glTranslated(0, 0, CAR_HEIGHT / 4.0 * 3.0);
-    glScalef(CAR_LENGTH, CAR_WIDTH, CAR_HEIGHT / 2.0);
+    glScalef(CAR_LENGTH / 1.5, CAR_WIDTH, CAR_HEIGHT / 2.0);
     glutSolidCube(1.0);
     glPopMatrix();
     // Draw the car body.
@@ -164,7 +164,7 @@ void DrawOneCar(float bodyColor[3])
 
 /////////////////////////////////////////////////////////////////////////////
 // Draw all the cars. Each is put correctly on its great circle.
-/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////                                                                                                                              
 
 void DrawAllCars(void)
 {
@@ -173,10 +173,10 @@ void DrawAllCars(void)
         //****************************
         // WRITE YOUR CODE HERE.
        
-        glPushMatrix(); 
+        glPushMatrix();  
+       
         glRotatef(car[i].rotAngle, car[i].xzAxis[0], 0.0, car[i].xzAxis[1]);
-        glRotatef(car[i].angularPos, 1.0, 0.0, 0.0);
-        glRotated(90, 0, 0, 1);
+        glRotatef(car[i].angularPos, 0.0, 1.0, 0.0);
         glTranslatef(0.0, 0.0, PLANET_RADIUS);
 
         DrawOneCar(car[i].bodyColor);

@@ -24,12 +24,13 @@ D:\desktop\NUS_SOC\graphics_rendering\openGL\Assignment1\assign1_todo_(win-vs201
 D:\desktop\NUS_SOC\graphics_rendering\openGL\Assignment1\assign1_todo_(win-vs2017)\main.cpp(74,36): warning C4305: “初始化”: 从“double”到“const GLfloat”截断
 D:\desktop\NUS_SOC\graphics_rendering\openGL\Assignment1\assign1_todo_(win-vs2017)\main.cpp(74,41): warning C4305: “初始化”: 从“double”到“const GLfloat”截断
 D:\desktop\NUS_SOC\graphics_rendering\openGL\Assignment1\assign1_todo_(win-vs2017)\main.cpp(74,46): warning C4305: “初始化”: 从“double”到“const GLfloat”截断
+D:\desktop\NUS_SOC\graphics_rendering\openGL\Assignment1\assign1_todo_(win-vs2017)\main.cpp(138,25): warning C4305: “参数”: 从“double”到“GLfloat”截断
 D:\desktop\NUS_SOC\graphics_rendering\openGL\Assignment1\assign1_todo_(win-vs2017)\main.cpp(153,76): warning C4244: “参数”: 从“double”转换到“GLfloat”，可能丢失数据
 D:\desktop\NUS_SOC\graphics_rendering\openGL\Assignment1\assign1_todo_(win-vs2017)\main.cpp(153,44): warning C4244: “参数”: 从“double”转换到“GLfloat”，可能丢失数据
-D:\desktop\NUS_SOC\graphics_rendering\openGL\Assignment1\assign1_todo_(win-vs2017)\main.cpp(177,74): warning C4244: “参数”: 从“double”转换到“GLfloat”，可能丢失数据
-D:\desktop\NUS_SOC\graphics_rendering\openGL\Assignment1\assign1_todo_(win-vs2017)\main.cpp(177,51): warning C4244: “参数”: 从“double”转换到“GLfloat”，可能丢失数据
-D:\desktop\NUS_SOC\graphics_rendering\openGL\Assignment1\assign1_todo_(win-vs2017)\main.cpp(177,25): warning C4244: “参数”: 从“double”转换到“GLfloat”，可能丢失数据
+D:\desktop\NUS_SOC\graphics_rendering\openGL\Assignment1\assign1_todo_(win-vs2017)\main.cpp(178,74): warning C4244: “参数”: 从“double”转换到“GLfloat”，可能丢失数据
+D:\desktop\NUS_SOC\graphics_rendering\openGL\Assignment1\assign1_todo_(win-vs2017)\main.cpp(178,51): warning C4244: “参数”: 从“double”转换到“GLfloat”，可能丢失数据
 D:\desktop\NUS_SOC\graphics_rendering\openGL\Assignment1\assign1_todo_(win-vs2017)\main.cpp(178,25): warning C4244: “参数”: 从“double”转换到“GLfloat”，可能丢失数据
+D:\desktop\NUS_SOC\graphics_rendering\openGL\Assignment1\assign1_todo_(win-vs2017)\main.cpp(179,25): warning C4244: “参数”: 从“double”转换到“GLfloat”，可能丢失数据
 D:\desktop\NUS_SOC\graphics_rendering\openGL\Assignment1\assign1_todo_(win-vs2017)\main.cpp(481,33): warning C4305: “初始化”: 从“double”到“GLfloat”截断
 D:\desktop\NUS_SOC\graphics_rendering\openGL\Assignment1\assign1_todo_(win-vs2017)\main.cpp(481,38): warning C4305: “初始化”: 从“double”到“GLfloat”截断
 D:\desktop\NUS_SOC\graphics_rendering\openGL\Assignment1\assign1_todo_(win-vs2017)\main.cpp(481,43): warning C4305: “初始化”: 从“double”到“GLfloat”截断

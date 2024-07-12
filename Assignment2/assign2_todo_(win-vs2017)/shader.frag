@@ -180,8 +180,8 @@ void drawBrickCube()
         vec3 T, B;
         vec3 N = normalize(ecNormal);
         compute_tangent_vectors(N, ecPosition, v2fTexCoord.st, T, B);
-        vec3 normalMapColor = texture(BrickNormalMap, v2fTexCoord.st).rgb;
-        vec3 tanPerturbedNormal = normalize(normalMapColor * 2.0 - 1.0); 
+        vec3 BrickNormalColor = texture(BrickNormalMap, v2fTexCoord.st).rgb;
+        vec3 tanPerturbedNormal = normalize(BrickNormalColor * 2.0 - 1.0); 
 
         tanPerturbedNormal = normalize(tanPerturbedNormal);
         vec3 ecPerturbedNormal = tanPerturbedNormal.x * T +
@@ -197,8 +197,8 @@ void drawBrickCube()
                                  LightDiffuse * N_dot_L * BrickDiffuseColor +
                                  LightSpecular * spec;
 
-        FragColor = fColor;  // Replace this with your code.
-    }
+        FragColor = fColor;  
+    } 
     else discard;
 }
 
@@ -242,7 +242,39 @@ void drawWoodenCube()
         // TASK 3: WRITE YOUR CODE HERE. //
         ///////////////////////////////////
 
-        FragColor = vec4(0.0, 0.0, 1.0, 1.0);  // Replace this with your code.
+        vec2 c = MirrorTileDensity * v2fTexCoord.xy;
+        vec2 p = fract(c) - vec2(0.5);
+        float sqrDist = p.x * p.x + p.y * p.y;
+
+        if (sqrDist > MirrorRadius * MirrorRadius) {
+            vec4 WoodDiffuseColor = texture(WoodDiffuseMap, v2fTexCoord.st);
+            vec3 reflectVec = reflect(-lightVec, necNormal);
+            float N_dot_L = max(0.0, dot(necNormal, lightVec));
+            float R_dot_V = max(0.0, dot(reflectVec, viewVec));
+            float spec = (R_dot_V == 0.0) ? 0.0 : pow(R_dot_V, BrickShininess);
+            vec4 fColor = LightAmbient * WoodDiffuseColor +
+                                     LightDiffuse * N_dot_L * WoodDiffuseColor +
+                                     LightSpecular * spec;
+           FragColor = fColor;
+        } else {
+
+            vec3 T, B;
+            compute_tangent_vectors(necNormal, ecPosition, v2fTexCoord.st, T, B);
+           
+            vec3 tanPerturbedNormal = normalize(vec3(p.x, p.y, 1.0));
+
+            vec3 ecPerturbedNormal = tanPerturbedNormal.x * T +
+                                                               tanPerturbedNormal.y * B +
+                                                               tanPerturbedNormal.z * necNormal;
+
+            vec3 ecReflectVec = reflect(-viewVec, ecPerturbedNormal);
+            vec3 wcReflectVec = inverse(NormalMatrix) * ecReflectVec;
+            vec3 envReflectColor = vec3(texture(EnvMap, wcReflectVec));
+           
+            FragColor = vec4(envReflectColor, 1.0); 
+        }
+
+          
     }
     else discard;
 }

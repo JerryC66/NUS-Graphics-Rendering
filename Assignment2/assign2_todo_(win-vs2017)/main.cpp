@@ -342,6 +342,9 @@ static void MyDrawFunc(void)
         ///////////////////////////////////
         // TASK 1: WRITE YOUR CODE HERE. //
         ///////////////////////////////////
+        modelMat0 = glm::translate(modelMat0, glm::vec3(cam_eye[0], cam_eye[1], cam_eye[2]));
+        modelMat0 = glm::scale(modelMat0, glm::vec3(skyboxSize, skyboxSize, skyboxSize));
+        
 
 
         glm::mat4 modelViewMat0 = viewMat * modelMat0;

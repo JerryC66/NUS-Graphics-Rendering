@@ -177,7 +177,27 @@ void drawBrickCube()
         // TASK 2: WRITE YOUR CODE HERE. //
         ///////////////////////////////////
 
-        FragColor = vec4(1.0, 0.0, 0.0, 1.0);  // Replace this with your code.
+        vec3 T, B;
+        vec3 N = normalize(ecNormal);
+        compute_tangent_vectors(N, ecPosition, v2fTexCoord.st, T, B);
+        vec3 normalMapColor = texture(BrickNormalMap, v2fTexCoord.st).rgb;
+        vec3 tanPerturbedNormal = normalize(normalMapColor * 2.0 - 1.0); 
+
+        tanPerturbedNormal = normalize(tanPerturbedNormal);
+        vec3 ecPerturbedNormal = tanPerturbedNormal.x * T +
+                                                         tanPerturbedNormal.y * B +
+                                                         tanPerturbedNormal.z * N;
+
+        vec3 reflectVec = reflect(-lightVec, ecPerturbedNormal);
+        float N_dot_L = max(0.0, dot(ecPerturbedNormal, lightVec));
+        float R_dot_V = max(0.0, dot(reflectVec, viewVec));
+        float spec = (R_dot_V == 0.0) ? 0.0 : pow(R_dot_V, BrickShininess);
+        vec4 BrickDiffuseColor = texture(BrickDiffuseMap, v2fTexCoord.xy);
+        vec4 fColor = LightAmbient * BrickDiffuseColor +
+                                 LightDiffuse * N_dot_L * BrickDiffuseColor +
+                                 LightSpecular * spec;
+
+        FragColor = fColor;  // Replace this with your code.
     }
     else discard;
 }

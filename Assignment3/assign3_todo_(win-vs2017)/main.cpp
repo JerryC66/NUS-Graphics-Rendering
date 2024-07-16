@@ -176,11 +176,33 @@ static void SetUpShadowMapAndFBO(void)
 
     // const GLfloat texBorder[] = { ??? }; // Fill in correct border values.
 
+    const GLfloat texBorder[] = { 1.0f, 0.0f, 0.0f, 0.0f };
+    glActiveTexture(texUnit);
+    GLuint depthTex;
+    glGenTextures(1, &depthTex);
+    glBindTexture(GL_TEXTURE_2D, depthTex);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, texInternalFormat, shadowMapWidth, shadowMapHeight, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, texBorder);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+
+    GLuint fboHandle;
+    glGenFramebuffers(1, &fboHandle);
+    glBindFramebuffer(GL_FRAMEBUFFER, fboHandle);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, attachPoint, GL_TEXTURE_2D, depthTex, 0);
+    GLenum drawBuffers[] = { GL_NONE };
+    glDrawBuffers(1, drawBuffers);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    
     ///////////////////////////////////
     // TASK 2: WRITE YOUR CODE HERE. //
     ///////////////////////////////////
-
-}
+}    
 
 
 
@@ -427,6 +449,16 @@ static void RenderShadowMap(void)
     // * Render the scene into the shadowmap.
     // * Compute shadowMatrix.
     /////////////////////////////////////////////////////////////////////////////
+
+    RenderObjects(viewMat, projMat);
+    glm::mat4 biasMatrix = glm::mat4(
+        0.5, 0.0, 0.0, 0.0,
+        0.0, 0.5, 0.0, 0.0,
+        0.0, 0.0, 0.5, 0.0,
+        0.5, 0.5, 0.5, 1.0
+    );
+    shadowMatrix = biasMatrix * projMat * viewMat;
+
 
     ///////////////////////////////////
     // TASK 3: WRITE YOUR CODE HERE. //

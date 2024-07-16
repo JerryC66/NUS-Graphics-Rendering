@@ -107,8 +107,27 @@ void DrawSceneWithProjection()
     // TASK 1: WRITE YOUR CODE HERE. //
     ///////////////////////////////////
 
+    vec4 shadowCoord = ShadowMatrix * vec4(wcPosition, 1.0);
+    shadowCoord.xyz /= shadowCoord.w;
+    shadowCoord = shadowCoord * 0.5 + 0.5;
 
-    FragColor = vec4( ambientColor + shadowFact * (diffuseColor + specularColor), 1.0 );
+    vec4 color = textureProj(ProjectorImage, shadowCoord);
+
+    float sum = 0.0;
+    sum += textureProjOffset(ShadowMap, shadowCoord, ivec2(-1,-1));
+    sum += textureProjOffset(ShadowMap, shadowCoord, ivec2(-1,1));
+    sum += textureProjOffset(ShadowMap, shadowCoord, ivec2(1,1));
+    sum += textureProjOffset(ShadowMap, shadowCoord, ivec2(1,-1));
+    float shadowFact = sum * 0.25;
+
+    float N_dot_L, R_dot_V_pow_n;
+    PhongLighting(N_dot_L, R_dot_V_pow_n);
+
+    vec3 ambientColor = LightAmbient * MatlAmbient;
+    vec3 diffuseColor = color.rgb * N_dot_L * MatlDiffuse;
+    vec3 specularColor = color.rgb * R_dot_V_pow_n * MatlSpecular;
+
+    FragColor = vec4(ambientColor + shadowFact * (diffuseColor + specularColor), 1.0);
 }
 
 
